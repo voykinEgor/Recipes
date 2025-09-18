@@ -1,9 +1,14 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp") version "2.2.20-2.0.2"
 }
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
     namespace = "com.example.recipes"
@@ -15,8 +20,11 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+        android.buildFeatures.buildConfig = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", "\"${properties.getProperty("apiKey")}\"")
     }
 
     buildTypes {
@@ -76,4 +84,8 @@ dependencies {
     implementation (libs.dagger.android)
     implementation (libs.dagger.android.support)
     ksp (libs.dagger.android.processor)
+
+    //Логирование запросов
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 }

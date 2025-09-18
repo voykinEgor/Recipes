@@ -15,9 +15,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RecipesTheme {
-                Scaffold(modifier = Modifier.Companion.fillMaxSize()) { innerPadding ->
-
+                Scaffold { paddingValues ->
+                    Recipes(paddingValues)
                 }
+
             }
         }
     }
