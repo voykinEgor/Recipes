@@ -1,4 +1,4 @@
-package com.example.recipes.presentation
+package com.example.recipes.presentation.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

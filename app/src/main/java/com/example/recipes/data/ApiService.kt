@@ -7,8 +7,8 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("/random?number=50")
-    fun getRecipes(
+    @GET("random?number=50")
+    suspend fun getRecipes(
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY
     ): RecipesDto
 }

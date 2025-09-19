@@ -1,6 +1,5 @@
-package com.example.recipes.presentation
+package com.example.recipes.presentation.views
 
-import android.content.res.Resources
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -19,26 +18,49 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
 import com.example.recipes.LOG_TAG
 import com.example.recipes.R
 import com.example.recipes.domain.entities.Recipe
-import com.example.recipes.ui.theme.RecipesTheme
+import com.example.recipes.presentation.RecipeListViewModel
+import com.example.recipes.presentation.ViewModelFactory
+import com.example.recipes.presentation.states.RecipeState
 
 @Composable
 fun Recipes(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModel: RecipeListViewModel
 ) {
+    val recipesState by viewModel.recipesState.collectAsState(
+            initial = RecipeState.Initial
+    )
+
+    when (recipesState){
+        is RecipeState.Error -> {
+            Log.d(LOG_TAG, (recipesState as RecipeState.Error).error)
+        }
+        RecipeState.Initial -> {
+
+        }
+        RecipeState.Loading -> {
+
+        }
+        is RecipeState.Success -> {
+            Log.d(LOG_TAG, (recipesState as RecipeState.Success).recipes.toString())
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

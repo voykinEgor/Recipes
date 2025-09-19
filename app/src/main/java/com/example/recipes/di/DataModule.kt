@@ -11,11 +11,13 @@ import dagger.Provides
 @Module
 interface DataModule {
 
+    @ApplicationScope
     @Binds
     fun bindRecipeRepository(impl: RecipeRepositoryImpl): RecipeRepository
 
     companion object{
         @Provides
+        @ApplicationScope
         fun provideApiService(): ApiService{
             return ApiFactory.apiService
         }
