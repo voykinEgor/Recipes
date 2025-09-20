@@ -57,7 +57,7 @@ fun Recipes(
         navHostController = navController,
         homeScreenContent = { ListRecipes(paddingValues, viewModel, navController) },
         recipeDetailsContent = {recipe ->
-            RecipeDetails(recipe)
+            RecipeDetails(recipe, paddingValues)
         }
     )
 }

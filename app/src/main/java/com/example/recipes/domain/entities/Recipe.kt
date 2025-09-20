@@ -17,7 +17,9 @@ data class Recipe(
     val likes: Int,
     val isVegetarian: Boolean,
     val isVegan: Boolean,
-    val isGlutenFree: Boolean
+    val isGlutenFree: Boolean,
+    val summary: String,
+    val extendedIngredients: List<RecipeIngredient>
 ): Parcelable{
 
     companion object{

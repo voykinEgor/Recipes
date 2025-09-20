@@ -20,5 +20,9 @@ data class RecipeDto(
     @SerializedName("vegan")
     val isVegan: Boolean,
     @SerializedName("glutenFree")
-    val isGlutenFree: Boolean
+    val isGlutenFree: Boolean,
+    @SerializedName("summary")
+    val summary: String,
+    @SerializedName("extendedIngredients")
+    val extendedIngredients: List<RecipeIngredientDto>
 )
