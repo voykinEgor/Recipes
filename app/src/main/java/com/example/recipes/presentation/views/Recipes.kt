@@ -33,11 +33,15 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.recipes.LOG_TAG
 import com.example.recipes.R
 import com.example.recipes.domain.entities.Recipe
 import com.example.recipes.presentation.RecipeListViewModel
 import com.example.recipes.presentation.ViewModelFactory
+import com.example.recipes.presentation.navigation.NavGraph
+import com.example.recipes.presentation.navigation.Screen
 import com.example.recipes.presentation.states.RecipeState
 
 @Composable
@@ -45,13 +49,36 @@ fun Recipes(
     paddingValues: PaddingValues,
     viewModel: RecipeListViewModel
 ) {
-    val recipesState by viewModel.recipesState.collectAsState(
-        initial = RecipeState.Initial
+    val navController = rememberNavController()
+
+
+
+    NavGraph(
+        navHostController = navController,
+        homeScreenContent = { ListRecipes(paddingValues, viewModel, navController) },
+        recipeDetailsContent = {recipe ->
+            RecipeDetails(recipe)
+        }
     )
+}
+
+@Composable
+fun ListRecipes(
+    paddingValues: PaddingValues,
+    viewModel: RecipeListViewModel,
+    navController: NavHostController
+) {
+    var query by rememberSaveable { mutableStateOf("") }
 
     var showError by remember {
         mutableStateOf(false)
     }
+
+    val recipesState by viewModel.recipesState.collectAsState(
+        initial = RecipeState.Initial
+    )
+
+    var listRecipes = emptyList<Recipe>()
 
     when (recipesState) {
         is RecipeState.Error -> {
@@ -59,7 +86,7 @@ fun Recipes(
         }
 
         is RecipeState.Success -> {
-            ListRecipes(paddingValues, (recipesState as RecipeState.Success).recipes, )
+            listRecipes = (recipesState as RecipeState.Success).recipes
             Log.d(LOG_TAG, (recipesState as RecipeState.Success).recipes.toString())
         }
 
@@ -72,14 +99,6 @@ fun Recipes(
             showError = false
         }
     }
-}
-
-@Composable
-fun ListRecipes(
-    paddingValues: PaddingValues,
-    listRecipes: List<Recipe>
-) {
-    var query by rememberSaveable { mutableStateOf("") }
 
     val filteredRecipes = listRecipes.filter { recipe ->
         recipe.title.contains(query, ignoreCase = true)
@@ -128,7 +147,12 @@ fun ListRecipes(
             )
         }
         items(filteredRecipes) {
-            RecipeCard(it)
+            RecipeCard(
+                recipe = it,
+                onClick = {
+                    navController.navigate(Screen.About.getRoute(it))
+                }
+            )
         }
     }
 }

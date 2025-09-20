@@ -37,14 +37,16 @@ import com.example.recipes.domain.entities.Recipe
 @Composable
 fun RecipeCard(
     recipe: Recipe,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ){
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(8.dp)
+        elevation = CardDefaults.cardElevation(8.dp),
+        onClick = onClick
     ) {
         Column {
             AsyncImage(
