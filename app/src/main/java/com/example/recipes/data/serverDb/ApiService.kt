@@ -1,4 +1,4 @@
-package com.example.recipes.data
+package com.example.recipes.data.serverDb
 
 import com.example.recipes.BuildConfig
 import com.example.recipes.data.entities.RecipesDto

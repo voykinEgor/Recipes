@@ -7,4 +7,5 @@ sealed class RecipeState {
     object Loading: RecipeState()
     data class Success(val recipes: List<Recipe>): RecipeState()
     data class Error(val error: String): RecipeState()
+    object Empty: RecipeState()
 }

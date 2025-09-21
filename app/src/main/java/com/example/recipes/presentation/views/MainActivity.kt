@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val component by lazy {
-        (application as RecipeApp).component
+        (application as RecipeApp).appComponent
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

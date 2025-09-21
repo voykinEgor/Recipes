@@ -1,14 +1,13 @@
 package com.example.recipes
 
 import android.app.Application
-import com.example.recipes.di.Component
-import com.example.recipes.di.DaggerComponent
-import dagger.android.DaggerApplication
+import com.example.recipes.di.AppComponent
+import com.example.recipes.di.DaggerAppComponent
 import kotlin.getValue
 
 class RecipeApp: Application() {
 
-    val component: Component by lazy {
-        DaggerComponent.create()
+    val appComponent: AppComponent by lazy {
+        DaggerAppComponent.factory().create(this)
     }
 }

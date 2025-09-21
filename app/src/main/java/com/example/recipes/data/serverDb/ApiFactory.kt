@@ -1,4 +1,4 @@
-package com.example.recipes.data
+package com.example.recipes.data.serverDb
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

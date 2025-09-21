@@ -11,10 +11,6 @@ import javax.inject.Inject
 class RecipeListViewModel @Inject constructor(
     val getRecipesUseCase: GetRecipesUseCase
 ): ViewModel() {
-
     val recipesState = getRecipesUseCase()
-        .filter { it.isNotEmpty() }
-        .map { RecipeState.Success(it) }
         .onStart { RecipeState.Loading }
-
 }
